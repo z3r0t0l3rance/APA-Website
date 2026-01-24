@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anti-Pedophile Association</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    header {
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: #4a5fcf;
+    }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; }
+    nav button {
+      background: #2a2a2a; color: #e0e0e0;
+      border: 1px solid #444; 
+      border-radius: 6px;
+      padding: 8px 16px; cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    nav button:hover { background: #333; }
+    nav button.active { background: #4a5fcf; color: #fff; border-color: #4a5fcf; }
+    main { padding: 32px 16px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-height: 120px;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+    h1, h2, h3 { margin-top: 0; }
+    .hero {
+      display: grid; gap: 16px; align-items: center;
+      grid-template-columns: 1.2fr .8fr;
+    }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 20px; background: #222; color: #7c9cff; border: 1px solid #444; }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      background: #4a5fcf;
+      color: #fff; 
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px; cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { background: #5a6fdf; }
+    .btn.secondary { background: #2a2a2a; color: #e0e0e0; border: 1px solid #444; }
+    .btn.secondary:hover { background: #333; }
+    footer { border-top: 1px solid #333; padding: 24px 16px; color: #888; }
+    @media (max-width: 800px) { .hero { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <div class="brand">
+        <div class="logo"></div>
+        <strong>Anti-Pedophile Association</strong>
+      </div>
+      <nav>
+        <button class="active" data-tab="home">Home</button>
+        <button data-tab="about">About</button>
+        <button data-tab="hall">Hall of Gooners</button>
+        <button data-tab="join">Join Discord</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home" class="tab">
+      <div class="hero">
+        <div>
+          <span style="display:inline-block; padding:6px 12px; background:#2a2a2a; border-radius:20px; font-size:12px; color:#888; margin-bottom:12px;">Community Safety</span>
+          <h1>Protecting Communities Online</h1>
+          <p style="color:#aaa; max-width:500px;">Discord server for sharing information and reporting suspicious activity to keep communities safe.</p>
+          <div class="cta">
+            <button class="btn" onclick="switchTab('join')">Join Discord</button>
+            <button class="btn secondary" onclick="switchTab('about')">Learn More</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>What we do</h3>
+          <ul class="muted">
+            <li>Share educational resources</li>
+            <li>Promote safe online behavior</li>
+            <li>Encourage proper reporting channels</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="tab" hidden>
+      <div class="grid">
+        <div class="card">
+        <h2>What We Do</h2>
+        <p style="color:#aaa;">Share information about online safety and help people report suspicious activity to the proper channels.</p>
+      </div>
+      <div class="card">
+        <h2>Community Rules</h2>
+        <ul style="color:#aaa;">
+          <li>No harassment or doxxing</li>
+          <li>Use official reporting tools</li>
+          <li>Follow platform rules</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Get Involved</h2>
+        <p style="color:#aaa;">Join our Discord server to get involved or report concerns.</p>
+      </div>
+      </div>
+    </section>
+
+    <section id="hall" class="tab" hidden>
+  <div style="margin-bottom:16px;">
+    <h2>Hall of Gooners</h2>
+    <p style="color:#888;">Click profiles for more information</p>
+  </div>
+  <div id="hallGrid" class="grid"></div>
+</section>
+
+    <section id="join" class="tab" hidden>
+      <div class="card" style="text-align: center;">
+        <h2>Join Our Discord</h2>
+        <p style="color:#aaa; margin-bottom: 24px;">Connect with our community and help keep online spaces safe.</p>
+        <button class="btn" style="font-size: 16px; padding: 16px 32px;">Join Discord Server</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Anti-Pedophile Association • All rights reserved</div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" style="position:fixed; inset:0; background:rgba(0,0,0,.8); display:none; align-items:center; justify-content:center; padding:16px; z-index:50;">
+    <div class="card" style="max-width:520px; width:100%;">
+      <div style="display:flex; gap:16px; align-items:flex-start;">
+        <img id="modalImg" src="" alt="" style="width:96px; height:96px; border-radius:12px; object-fit:cover; background:#222;" />
+        <div>
+          <h3 id="modalName"></h3>
+          <p id="modalDesc" style="color:#888;"></p>
+          <p style="color:#888;"><strong>Details:</strong> <span id="modalInfo"></span></p>
+        </div>
+      </div>
+      <div style="margin-top:16px; text-align:right;">
+        <button class="btn secondary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('nav button');
+    const tabs = document.querySelectorAll('.tab');
+    
+    function switchTab(id) {
+      tabs.forEach(t => t.hidden = t.id !== id);
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+    }
+    
+    buttons.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const hallData = [
+      {
+        name: "Mr.Kitsumeee / Caleb Cruz",
+        image: "images/mrkitsumeee.png",
+        short: "A dirty gooner",
+        info: "Some dumb ass who decides to groom kids on VR Chat."
+      },
+    ];
+
+    const hallGrid = document.getElementById('hallGrid');
+
+    function renderHall() {
+      hallGrid.innerHTML = '';
+      hallData.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.cursor = 'pointer';
+        card.innerHTML = `
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <img src="${p.image}" alt="${p.name}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #222; flex-shrink: 0;" onerror="this.style.display='none';" />
+            <div style="flex: 1;">
+              <h3 style="margin: 0 0 8px 0;">${p.name}</h3>
+              <p style="color: #888; margin: 0;">${p.short}</p>
+            </div>
+          </div>
+        `;
+        card.onclick = () => openModal(p);
+        hallGrid.appendChild(card);
+      });
+    }
+
+    const modal = document.getElementById('modal');
+    function openModal(p) {
+      document.getElementById('modalImg').src = p.image;
+      document.getElementById('modalName').textContent = p.name;
+      document.getElementById('modalDesc').textContent = p.short;
+      document.getElementById('modalInfo').textContent = p.info;
+      modal.style.display = 'flex';
+    }
+    function closeModal() { modal.style.display = 'none'; }
+
+    renderHall();
+  </script>
+</body>
+</html>
