@@ -6,89 +6,112 @@
   <link rel="icon" type="image/x-icon" href="APA_website_logo.png">
   <title>Anti-Pedophile Association</title>
   <style>
+    :root{
+      --bg-1: #1a0505;
+      --bg-2: #120809;
+      --accent: #ff5757;
+      --muted: #e7b4b4;
+      --card: #200909;
+    }
+    *{box-sizing:border-box}
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
-      background: #0f0f0f;
-      color: #e0e0e0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(110,140,255,0.06), transparent), linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color: #e6eef8;
       min-height: 100vh;
+      -webkit-font-smoothing:antialiased;
     }
     header {
-      background: #1a1a1a;
-      border-bottom: 1px solid #333;
-      padding: 16px 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.01), rgba(0,0,0,0.06));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      padding: 12px 0;
       position: sticky;
       top: 0;
       z-index: 10;
     }
-    .container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 12px 16px; }
     .brand { display: flex; align-items: center; gap: 12px; }
-    .logo {
-      <img src="APA_website_logo.png" alt="Company Logo" width="36" height="36", border-radius="8">
-    }
+    .logo img{ width:40px; height:40px; border-radius:8px; object-fit:cover; display:block; }
     nav { display: flex; gap: 8px; flex-wrap: wrap; }
     nav button {
-      background: #2a2a2a; color: #e0e0e0;
-      border: 1px solid #444; 
-      border-radius: 6px;
+      background: transparent; color: var(--muted);
+      border: 1px solid transparent; 
+      border-radius: 10px;
       padding: 8px 16px; cursor: pointer;
       font-size: 14px;
-      transition: all 0.2s ease;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+      display:inline-flex; align-items:center; gap:8px;
     }
-    nav button:hover { background: #333; }
-    nav button.active { background: #4a5fcf; color: #fff; border-color: #4a5fcf; }
-    main { padding: 32px 16px; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    nav button:hover { transform: translateY(-3px); color: #fff; }
+    nav button.active { background: linear-gradient(90deg,var(--accent), #ff9b9b); color:#2b0404; box-shadow: 0 10px 30px rgba(255,87,87,0.18); animation: pulse 2.4s ease-in-out infinite; }
+    main { padding: 30px 16px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
     @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
     .card {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.06));
+      border: 1px solid rgba(255,255,255,0.02);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 10px 34px rgba(10,6,6,0.6);
+      transition: transform 0.35s cubic-bezier(.18,.9,.32,1), box-shadow 0.25s ease;
       min-height: 120px;
+      will-change: transform, opacity;
+      opacity: 0;
     }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-    }
-    h1, h2, h3 { margin-top: 0; }
-    .hero {
-      display: grid; gap: 16px; align-items: center;
-      grid-template-columns: 1.2fr .8fr;
-    }
-    .badge { display: inline-block; padding: 6px 10px; border-radius: 20px; background: #222; color: #7c9cff; border: 1px solid #444; }
+    .card:hover { transform: translateY(-10px) rotateZ(-1deg) scale(1.02); box-shadow: 0 28px 60px rgba(120,30,30,0.26); }
+    h1, h2, h3 { margin-top: 0; color: #eaf0ff; }
+    .hero { display: grid; gap: 16px; align-items: center; grid-template-columns: 1.2fr .8fr; }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 20px; background: rgba(255,255,255,0.01); color: var(--accent); border: 1px solid rgba(255,255,255,0.02); }
     .cta { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn {
-      background: #4a5fcf;
-      color: #fff; 
-      border: none;
-      border-radius: 8px;
-      padding: 12px 24px; cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-    .btn:hover { background: #5a6fdf; }
-    .btn.secondary { background: #2a2a2a; color: #e0e0e0; border: 1px solid #444; }
-    .btn.secondary:hover { background: #333; }
-    footer { border-top: 1px solid #333; padding: 24px 16px; color: #888; }
+    .btn { background: linear-gradient(90deg,var(--accent), #ff9696); color: #2b0404; border: none; border-radius: 10px; padding: 12px 20px; cursor: pointer; font-size: 14px; font-weight:700; box-shadow: 0 12px 30px rgba(255,87,87,0.12); transform: translateZ(0); }
+    .btn.secondary { background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,0.02); }
+    .btn:active{ transform: translateY(1px); }
+    footer { border-top: 1px solid rgba(255,255,255,0.02); padding: 24px 16px; color: #93a0c9; }
     @media (max-width: 800px) { .hero { grid-template-columns: 1fr; } }
+
+    /* Animations */
+    @keyframes popIn { from { opacity: 0; transform: translateY(18px) rotateX(-6deg) scale(.98); filter: blur(2px); } to { opacity:1; transform: translateY(0) rotateX(0) scale(1); filter: blur(0); } }
+    .tab:not([hidden]) .card{ animation: popIn .42s cubic-bezier(.2,.9,.3,1) both; }
+    @keyframes pulse { 0% { box-shadow: 0 8px 24px rgba(255,87,87,0.08); } 50% { box-shadow: 0 18px 44px rgba(255,87,87,0.18); transform: translateY(-2px); } 100% { box-shadow: 0 8px 24px rgba(255,87,87,0.08); } }
+
+    /* Staff styles */
+    .staff-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:18px; }
+    @media (max-width:1024px){ .staff-grid{ grid-template-columns: repeat(2,1fr);} }
+    @media (max-width:640px){ .staff-grid{ grid-template-columns: 1fr; } }
+    .staff-card{ display:flex; gap:14px; align-items:center; padding:12px; border-radius:12px; background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.03)); border: 1px solid rgba(255,255,255,0.015); }
+    .staff-avatar{ width:72px; height:72px; border-radius:12px; object-fit:cover; flex-shrink:0; box-shadow: 0 12px 28px rgba(80,20,20,0.45); transition: transform .28s ease, box-shadow .28s ease; }
+    .staff-avatar:hover{ transform: translateY(-6px) rotate(-2deg) scale(1.03); box-shadow: 0 22px 44px rgba(255,90,90,0.22); }
+    .role{ color:var(--muted); font-size:13px; }
+    .glow { box-shadow: 0 8px 30px rgba(110,140,255,0.12); }
+    /* Light theme (optional) */
+    :root.light {
+      --bg-1: #f7f9ff;
+      --bg-2: #eef3ff;
+      --accent: #2b6cff;
+      --muted: #526280;
+      --card: #ffffff;
+      color-scheme: light;
+    }
+    /* Toast */
+    #toast { position: fixed; right: 16px; bottom: 16px; background: rgba(10,10,10,0.9); color:#fff; padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.4); display:none; z-index:60; }
+    #searchHall{ width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:rgba(255,255,255,0.02); color:inherit; margin-bottom:12px; }
   </style>
 </head>
 <body>
   <header>
     <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
       <div class="brand">
-        <div class="logo"></div>
+        <div class="logo"><img src="APA_website_logo.png" alt="Logo"></div>
         <strong>Anti-Pedophile Association</strong>
       </div>
       <nav>
         <button class="active" data-tab="home">Home</button>
         <button data-tab="about">About</button>
         <button data-tab="hall">Hall of Gooners</button>
+        <button data-tab="staff">Staff</button>
         <button data-tab="join">Join Discord</button>
       </nav>
     </div>
@@ -146,6 +169,16 @@
   <div id="hallGrid" class="grid"></div>
 </section>
 
+    <section id="staff" class="tab" hidden>
+      <div style="margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <div>
+          <h2>Staff & Team</h2>
+          <p style="color:#93a0c9;">Meet the people who help run the community.</p>
+        </div>
+      </div>
+      <div id="staffGrid" class="staff-grid"></div>
+    </section>
+
     <section id="join" class="tab" hidden>
       <div class="card" style="text-align: center;">
         <h2>Join Our Discord</h2>
@@ -177,17 +210,46 @@
   </div>
 
   <script>
-    const buttons = document.querySelectorAll('nav button');
+    // Basic tabs and navigation
+    const buttons = document.querySelectorAll('nav button[data-tab]');
     const tabs = document.querySelectorAll('.tab');
-    
-    function switchTab(id) {
+
+    function switchTab(id, smooth = true) {
       tabs.forEach(t => t.hidden = t.id !== id);
       buttons.forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+      if (smooth) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-    
+
     buttons.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Theme toggle
+    const themeBtn = document.createElement('button');
+    themeBtn.title = 'Toggle theme';
+    themeBtn.style.border = 'none';
+    themeBtn.style.background = 'transparent';
+    themeBtn.style.color = 'var(--muted)';
+    themeBtn.style.cursor = 'pointer';
+    themeBtn.textContent = '🌗';
+    themeBtn.onclick = toggleTheme;
+    document.querySelector('nav').appendChild(themeBtn);
+
+    function applyTheme(t) {
+      if (t === 'light') document.documentElement.classList.add('light');
+      else document.documentElement.classList.remove('light');
+    }
+    function toggleTheme() {
+      const cur = localStorage.getItem('theme') === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', cur);
+      applyTheme(cur);
+      showToast(cur === 'light' ? 'Light theme enabled' : 'Dark theme enabled');
+    }
+    applyTheme(localStorage.getItem('theme') || 'dark');
+
+    // Hall data
     const hallData = [
       {
         name: "Mr.Kitsumeee / Caleb Cruz",
@@ -222,16 +284,30 @@
     ];
 
     const hallGrid = document.getElementById('hallGrid');
+    const searchInputId = 'searchHall';
+
+    // Inject search input above hallGrid
+    const hallSection = document.getElementById('hall');
+    if (hallSection) {
+      const search = document.createElement('input');
+      search.id = searchInputId;
+      search.placeholder = 'Search hall entries by name or description...';
+      search.addEventListener('input', renderHall);
+      hallSection.insertBefore(search, hallGrid);
+    }
 
     function renderHall() {
+      const q = (document.getElementById(searchInputId)?.value || '').toLowerCase().trim();
       hallGrid.innerHTML = '';
       hallData.forEach((p, i) => {
+        const text = (p.name + ' ' + (p.short||'') + ' ' + (p.info||'')).toLowerCase();
+        if (q && !text.includes(q)) return;
         const card = document.createElement('div');
         card.className = 'card';
         card.style.cursor = 'pointer';
         card.innerHTML = `
           <div style="display: flex; gap: 16px; align-items: flex-start;">
-            <img src="${p.image}" alt="${p.name}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #222; flex-shrink: 0;" onerror="this.style.display='none';" />
+            <img loading="lazy" src="${p.image}" alt="${p.name}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #222; flex-shrink: 0;" onerror="this.style.display='none';" />
             <div style="flex: 1;">
               <h3 style="margin: 0 0 8px 0;">${p.name}</h3>
               <p style="color: #888; margin: 0;">${p.short}</p>
@@ -239,21 +315,125 @@
           </div>
         `;
         card.onclick = () => openModal(p);
+        card.style.animationDelay = `${i * 80}ms`;
         hallGrid.appendChild(card);
       });
+      revealObserver.observeAll && revealObserver.observeAll();
+    }
+
+    const staffData = [
+      { name: 'Z3R0', role: 'Owner', image: 'staff/staff1.jpeg', bio: 'The head owner of the APA.', socials: [ { type: 'DoxBin', url: 'https://doxbin.net/user/Z3R0APA' } ] },
+    ];
+
+    const staffGrid = document.getElementById('staffGrid');
+
+    function renderStaff() {
+      if(!staffGrid) return;
+      staffGrid.innerHTML = '';
+      staffData.forEach((s, i) => {
+        const c = document.createElement('div');
+        c.className = 'card staff-card';
+        let socialsHTML = '';
+        if (s.socials && s.socials.length) {
+          socialsHTML = '<div style="margin-top:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">' + s.socials.map(soc => {
+            const ico = soc.type.toLowerCase().includes('discord') ? '🟪' : (soc.type.toLowerCase().includes('x')||soc.type.toLowerCase().includes('twitter') ? '🐦' : '🔗');
+            return `<a class="btn secondary" style="padding:6px 10px; font-size:13px;" href="${soc.url}" target="_blank" rel="noopener noreferrer">${ico} ${soc.type}</a>`;
+          }).join('') + '</div>';
+        }
+
+        c.innerHTML = `
+          <img loading="lazy" src="${s.image}" alt="${s.name}" class="staff-avatar" onerror="this.style.display='none'" />
+          <div>
+            <h3 style="margin:0;">${s.name}</h3>
+            <div class="role">${s.role}</div>
+            <p style="color:#93a0c9; margin-top:6px;">${s.bio}</p>
+            ${socialsHTML}
+          </div>
+        `;
+        c.onclick = () => openModal(s);
+        c.style.animationDelay = `${i * 90}ms`;
+        staffGrid.appendChild(c);
+      });
+      revealObserver.observeAll && revealObserver.observeAll();
     }
 
     const modal = document.getElementById('modal');
+    const modalCopyBtn = document.createElement('button');
+    modalCopyBtn.className = 'btn secondary';
+    modalCopyBtn.style.marginRight = '8px';
+    modalCopyBtn.textContent = 'Copy Info';
+    modalCopyBtn.onclick = () => {
+      const txt = `${document.getElementById('modalName').textContent} - ${document.getElementById('modalInfo').textContent}`;
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).then(()=> showToast('Profile copied to clipboard'));
+    };
+    // add copy button to modal actions
+    modal.querySelector('div[style*="text-align:right"]')?.prepend(modalCopyBtn);
+
     function openModal(p) {
-      document.getElementById('modalImg').src = p.image;
-      document.getElementById('modalName').textContent = p.name;
-      document.getElementById('modalDesc').textContent = p.short;
-      document.getElementById('modalInfo').textContent = p.info;
+      document.getElementById('modalImg').src = p.image || '';
+      document.getElementById('modalName').textContent = p.name || '';
+      document.getElementById('modalDesc').textContent = p.short || '';
+      document.getElementById('modalInfo').textContent = p.info || '';
+      // remove old socials area if present
+      const old = document.getElementById('modalSocials'); if (old) old.remove();
+      const socialsWrap = document.createElement('div'); socialsWrap.id = 'modalSocials'; socialsWrap.style.marginTop = '8px';
+      const socials = p.socials || [];
+      socials.forEach(s => {
+        const a = document.createElement('a');
+        a.href = s.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.textContent = (s.type || 'Link');
+        a.style.display = 'inline-block'; a.style.marginRight = '8px'; a.className = 'btn secondary'; a.style.padding = '6px 10px'; a.style.fontSize = '13px';
+        socialsWrap.appendChild(a);
+        const copy = document.createElement('button'); copy.className = 'btn secondary'; copy.textContent = 'Copy'; copy.style.marginLeft='6px'; copy.onclick = (e)=>{ e.stopPropagation(); navigator.clipboard?.writeText(s.url).then(()=> showToast('Link copied')); };
+        socialsWrap.appendChild(copy);
+      });
+      // insert socials after modalInfo
+      const infoNode = document.getElementById('modalInfo');
+      infoNode.parentNode.appendChild(socialsWrap);
       modal.style.display = 'flex';
+      setTimeout(()=> modal.querySelector('.card')?.focus?.(), 100);
     }
     function closeModal() { modal.style.display = 'none'; }
 
+    // close modal on outside click
+    modal.addEventListener('click', (e)=> { if (e.target === modal) closeModal(); });
+    // ESC key to close
+    document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeModal(); });
+
+    // Simple toast
+    const toastEl = document.createElement('div');
+    toastEl.id = 'toast';
+    document.body.appendChild(toastEl);
+    let toastTimer = null;
+    function showToast(msg, ms = 2500) {
+      toastEl.textContent = msg;
+      toastEl.style.display = 'block';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> toastEl.style.display = 'none', ms);
+    }
+
+    // Reveal on scroll using IntersectionObserver
+    const revealObserver = (function(){
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = 1; e.target.classList.add('glow'); obs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      return {
+        observeAll(){ document.querySelectorAll('.card').forEach(n => { n.style.opacity = 0; obs.observe(n); }); },
+        observe: (el)=> obs.observe(el)
+      };
+    })();
+
+    // Hook up join button(s)
+    document.querySelectorAll('.btn').forEach(b => {
+      if (/join discord/i.test(b.textContent || '')) {
+        b.addEventListener('click', ()=> { showToast('Opening invite...'); window.open('https://discord.gg/uYuVMZpjN2', '_blank'); });
+      }
+    });
+
+    // Initial render and reveal
     renderHall();
+    renderStaff();
+    revealObserver.observeAll();
   </script>
 </body>
 </html>
