@@ -112,6 +112,7 @@
         <button data-tab="about">About</button>
         <button data-tab="hall">Hall of Gooners</button>
         <button data-tab="staff">Staff</button>
+        <button data-tab="doxxes">Doxxes</button>
         <button data-tab="join">Join Discord</button>
       </nav>
     </div>
@@ -184,6 +185,24 @@
         <h2>Join Our Discord</h2>
         <p style="color:#aaa; margin-bottom: 24px;">Connect with our community and help keep online spaces safe.</p>
         <button class="btn" style="font-size: 16px; padding: 16px 32px;">Join Discord Server</button>
+      </div>
+    </section>
+
+    <section id="doxxes" class="tab" hidden>
+      <div style="display:grid; grid-template-columns: 320px 1fr; gap:18px;">
+        <div class="card" style="padding:12px;">
+          <h3>Doxxes - Read-only</h3>
+          <p style="color:#888; margin-top:6px;">These files are built into the website. Uploads are not permitted.</p>
+          <input id="doxxesSearch" placeholder="Filter files..." style="width:100%; padding:8px; margin:8px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:inherit;" />
+          <div id="fileList" style="display:flex; flex-direction:column; gap:8px; max-height:420px; overflow:auto; margin-top:8px;"></div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+            <h3 id="fileTitle">Select a file</h3>
+            <div style="color:#888; font-size:13px;">Read-only viewer</div>
+          </div>
+          <div id="fileViewer" style="margin-top:12px; white-space:pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; color:#dbe8ff; background:rgba(0,0,0,0.03); padding:12px; border-radius:8px; max-height:520px; overflow:auto; border:1px solid rgba(255,255,255,0.02);">No file selected.</div>
+        </div>
       </div>
     </section>
   </main>
@@ -423,6 +442,48 @@
       };
     })();
 
+    // doxxes (read-only) - built-in files only
+    const doxxFiles = [
+      { path: 'doxxes/vaibhav.txt', name: 'Vaibhav Singh' },
+      { path: 'doxxes/kitsumeee.txt', name: 'Mr.Kitsumeee' },
+    ];
+
+    function renderDoxxes(filter = '') {
+      const list = document.getElementById('fileList');
+      const viewer = document.getElementById('fileViewer');
+      const title = document.getElementById('fileTitle');
+      if (!list) return;
+      list.innerHTML = '';
+      const q = (filter || '').toLowerCase().trim();
+      doxxFiles.forEach(f => {
+        if (q && !f.name.toLowerCase().includes(q)) return;
+        const b = document.createElement('button');
+        b.className = 'btn secondary';
+        b.style.textAlign = 'left';
+        b.style.width = '100%';
+        b.textContent = f.name;
+        b.onclick = () => {
+          title.textContent = f.name;
+          viewer.textContent = 'Loading...';
+          fetch(encodeURI(f.path), { cache: 'no-store' })
+            .then(r => {
+              if (!r.ok) throw new Error('Failed to load: ' + r.status + ' ' + r.statusText);
+              return r.text();
+            })
+            .then(txt => viewer.textContent = txt)
+            .catch(err => {
+              console.error('Doxxes load error for', f.path, err);
+              viewer.textContent = 'Unable to load file: ' + (err && err.message ? err.message : 'unknown error');
+            });
+        };
+        list.appendChild(b);
+      });
+    }
+
+    const doxxesSearch = document.getElementById('doxxesSearch');
+    if (doxxesSearch) doxxesSearch.addEventListener('input', (e) => renderDoxxes(e.target.value));
+
+
     // Hook up join button(s)
     document.querySelectorAll('.btn').forEach(b => {
       if (/join discord/i.test(b.textContent || '')) {
@@ -433,6 +494,7 @@
     // Initial render and reveal
     renderHall();
     renderStaff();
+    renderDoxxes();
     revealObserver.observeAll();
   </script>
 </body>
